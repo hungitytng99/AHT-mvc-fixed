@@ -13,12 +13,6 @@ use MVC\Router;
 use MVC\Request;
 use MVC\Dispatcher;
 
-
-// require(ROOT . 'Config/core.php');
-// require(ROOT . 'router.php');
-// require(ROOT . 'request.php');
-// require(ROOT . 'dispatcher.php');
-
 $dispatch = new Dispatcher();
 $dispatch->dispatch();
 

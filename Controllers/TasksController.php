@@ -7,8 +7,6 @@ class TasksController extends Controller
 {
     function index()
     {
-        require(ROOT . 'Models/Task.php');
-
         $tasks = new Task();
 
         $d['tasks'] = $tasks->showAllTasks();
@@ -20,8 +18,6 @@ class TasksController extends Controller
     {
         if (isset($_POST["title"]))
         {
-            require(ROOT . 'Models/Task.php');
-
             $task= new Task();
 
             if ($task->create($_POST["title"], $_POST["description"]))
@@ -35,7 +31,6 @@ class TasksController extends Controller
 
     function edit($id)
     {
-        require(ROOT . 'Models/Task.php');
         $task= new Task();
 
         $d["task"] = $task->showTask($id);
@@ -53,7 +48,6 @@ class TasksController extends Controller
 
     function delete($id)
     {
-        require(ROOT . 'Models/Task.php');
 
         $task = new Task();
         if ($task->delete($id))

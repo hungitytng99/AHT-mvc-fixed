@@ -10,6 +10,8 @@ class Task extends Model
     {
         $sql = "INSERT INTO tasks (title, description, created_at, updated_at) VALUES (:title, :description, :created_at, :updated_at)";
 
+        
+
         $req = Database::getBdd()->prepare($sql);
 
         return $req->execute([
