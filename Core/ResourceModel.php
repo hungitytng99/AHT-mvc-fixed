@@ -2,7 +2,6 @@
 
 namespace MVC\Core;
 
-use MVC\Models\TaskModel;
 use MVC\Config\Database;
 
 class ResourceModel implements ResourceModelInterface
@@ -17,6 +16,21 @@ class ResourceModel implements ResourceModelInterface
         $this->table = $table;
         $this->id = $id;
         $this->model = $model;
+    }
+
+    public function get($id = null)
+    {
+        if (is_null($id)) {
+            $sql = "SELECT * FROM " . $this->table;
+            $req = Database::getBdd()->prepare($sql);
+            $req->execute();
+            return $req->fetchAll();
+        } else {
+            $sql = "SELECT * FROM " . $this->table . " WHERE id =" . $id;
+            $req = Database::getBdd()->prepare($sql);
+            $req->execute();
+            return $req->fetch();
+        }
     }
 
     public function save($model)
@@ -38,20 +52,19 @@ class ResourceModel implements ResourceModelInterface
             unset($keyData[0]);
 
             $setStatement = "";
-            foreach($keyData as $key){
-                $setStatement .= $key ." = :" .$key;
-                if(end($keyData) !== $key) $setStatement .= ", "; 
+            foreach ($keyData as $key) {
+                $setStatement .= $key . " = :" . $key;
+                if (end($keyData) !== $key) $setStatement .= ", ";
             }
-            $sql = "UPDATE " . $this->table . " SET " . $setStatement . " WHERE id = :id";  
+            $sql = "UPDATE " . $this->table . " SET " . $setStatement . " WHERE id = :id";
         }
-       
         $req = Database::getBdd()->prepare($sql);
         return $req->execute($data);
     }
 
     public function delete($model)
     {
-        $sql = 'DELETE FROM '. $this->table .' WHERE id = ?';
+        $sql = 'DELETE FROM ' . $this->table . ' WHERE id = ?';
         $req = Database::getBdd()->prepare($sql);
         return $req->execute([$model->getId()]);
     }
