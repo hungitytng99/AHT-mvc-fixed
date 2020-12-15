@@ -21,11 +21,6 @@ class ResourceModel implements ResourceModelInterface
 
     public function save($model)
     {
-        // $IModel = new TaskModel();
-        // $IModel->setId(1);
-        // $IModel->setTitle("Title333");
-        // $IModel->setDescription("Description");
-        // $this->table = "tasks";
         $data = $model->getProperties();
         $keyData = array_keys($data);
         unset($keyData[0]);
@@ -56,5 +51,8 @@ class ResourceModel implements ResourceModelInterface
 
     public function delete($model)
     {
+        $sql = 'DELETE FROM '. $this->table .' WHERE id = ?';
+        $req = Database::getBdd()->prepare($sql);
+        return $req->execute([$model->getId()]);
     }
 }
